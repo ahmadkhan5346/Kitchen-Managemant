@@ -1,12 +1,5 @@
-Inventory Management API
+Kitchen Management API
 This module provides endpoints to manage the stock of items in an inventory. It includes functionality to add stock, update stock quantities, and calculate the total stock for all items. The code uses FastAPI for building the API and SQLAlchemy for database interaction.
-
-Functions Overview
-home():
-
-A simple function that returns a welcome message ("PreciTaste").
-This can be used to verify that the service is running.
-addStock(stock_item: StockItem, request: Request, db: Session = Depends(get_db)):
 
 Adds or updates the quantity of an item in the inventory.
 If the item already exists in the inventory, its quantity is increased.
@@ -34,18 +27,6 @@ Pydantic: For data validation and request schema definition.
 Database Models
 The code assumes the following Inventory model is defined in the app.models module:
 
-python
-Copy code
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
-class Inventory(Base):
-    __tablename__ = "inventory"
-    id = Column(Integer, primary_key=True, index=True)
-    item_name = Column(String, unique=True, index=True)
-    quantity = Column(Integer, default=0)
 Usage
 Add Stock: Send a POST request to the addStock endpoint with the item name and quantity to add or update.
 Update Stock: Send a POST request to the updateStock endpoint with the item's ID and quantity to deduct.
@@ -53,7 +34,7 @@ View Stock: Send a GET request to the calculateItem endpoint to retrieve the cur
 
 Example Endpoints
 Add Stock:
-POST /addStock
+POST /api/insert-item
 {
   "item_name": "Burger Bun",
   "quantity": 10
@@ -65,7 +46,7 @@ Response:
 }
 
 Update Stock:
-POST /updateStock
+POST /api/update-item
 {
   "id": 1,
   "quantity": 3
@@ -78,7 +59,7 @@ Response:
 }
 
 View Stock:
-GET /calculateItem
+GET /api/calculate-item
 Response:
 
 {
