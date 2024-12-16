@@ -1,0 +1,28 @@
+services:
+    app:
+        container_name: restaurant
+        image: restaurant
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/kitchen
+        env_file:
+            - 'environments/.env'
+        depends_on:
+            - db
+    db:
+        image: postgres:17
+        restart: always
+        container_name: restaurant_db
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
+
+        env_file:
+            - 'environments/developement.env'
+        ports:
+            - "5434:5432" 
+
